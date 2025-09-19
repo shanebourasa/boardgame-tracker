@@ -13,6 +13,7 @@
         <ul>
             <li><a href='{{ url_for("index") }}'>Home</a></li>
             <li><a href='{{ url_for("users") }}'>Users</a></li>
+            <li><a href='{{ url_for("games") }}'>Games</a></li>
     </nav>
     <div>
         {% with messages = get_flashed_messages(with_categories=true) %}

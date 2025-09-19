@@ -70,8 +70,8 @@ def add_game():
 def users():
     return render_template('users.html')
 
-@app.route('/game/<name>')
-def game_list(name):
+@app.route('/games')
+def games():
     return render_template('games.html')
 
 if __name__ == "__main__":

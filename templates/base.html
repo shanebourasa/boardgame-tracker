@@ -9,6 +9,20 @@
 </head>
 
 <body>
+    <nav>
+        <ul>
+            <li><a href='{{ url_for("index") }}'>Home</a></li>
+            <li><a href='{{ url_for("users") }}'>Users</a></li>
+    </nav>
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
     <div id="content">{% block content %}{% endblock %}</div>
 </body>
 

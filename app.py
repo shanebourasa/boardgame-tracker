@@ -3,13 +3,6 @@ from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import SelectField, SelectMultipleField, DateField, SubmitField
 from wtforms.validators import DataRequired, Length
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import text
-from sqlalchemy import create_engine
-
-engine = create_engine('sqlite:///boardgames.db')
-db = SQLAlchemy()
-db_name = 'boardgames.db'
 
 import secrets
 foo = secrets.token_urlsafe(16)
@@ -18,10 +11,6 @@ app = Flask(__name__)
 app.secret_key = foo
 bootstrap = Bootstrap5(app)
 csrf = CSRFProtect(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-db.init_app(app)
 
 game_data = [
     {
@@ -55,25 +44,35 @@ class GameForm(FlaskForm):
     winner = SelectField('Winner:', choices=player_list)
     rps = SelectField('RPS:', choices=player_list)
     submit = SubmitField('Submit')
+    
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    return render_template('index.html', games=game_data)
+
+@app.route('/add', methods=['GET', 'POST'])
+def add_game():
     form = GameForm()
-    return render_template('index.html', games=game_data, form=form)
+    if form.validate_on_submit():
+        # flash(f'{ form.name.data } - { form.date.data } play created')
+        play_object = {
+            "name": form.name.data,
+            "date": form.date.data,
+            "players": form.players.data,
+            "winner": form.winner.data,
+            "rps": form.rps.data
+        }
+        game_data.append(play_object)
+        return redirect(url_for('index'))
+    return render_template('add_game.html', form = form)
+
+@app.route('/users', methods=['GET', 'POST'])
+def users():
+    return render_template('users.html')
 
 @app.route('/game/<name>')
 def game_list(name):
     return render_template('games.html')
-
-@app.route('/testdb')
-def testdb():
-    try:
-        db.session.query(text('1')).from_statement(text('SELECT 1')).all()
-        return '<h1>It works.</h1>'
-    except Exception as e:
-        error_text = "<p>The error:<br>" + str(e) + "</p>"
-        hed = '<h1>Something is broken.</h1>'
-        return hed + error_text
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -5,9 +5,8 @@
 
 {% block content %}
     <h1>Boardgame Tracker</h1>
-    {{ render_form(form) }}
-    <button>Add New Game</button>
-    <h2>Games History</h2>
+    <a href='/add'><button>Add New Game</button></a>
+    <h2>Recent Game Plays</h2>
     <table>
         <thead>
             <th>Game</td>
@@ -16,7 +15,8 @@
             <th>Winner</td>
             <th>RPS</td>
         </thead>
-        {% for game in games %}
+        <tbody>
+            {% for game in games %}
             <tr>
                 <td>{{ game.name }}</td>
                 <td>{{ game.date }}</td>
@@ -25,8 +25,6 @@
                 <td>{{ game.rps }}</td>
             </tr>
         {% endfor %}
-        <tbody>
-            <!-- TODO: add for loop of table data -->
         </tbody>
     </table>
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Boardgame Tracker{% endblock %}
+
+{% block content %}
+    <h1>Boardgame Tracker</h1>
+    <a href="{{ url_for('main.add_play') }}"><button>Add New Play</button></a>
+    <h2>Recent Game Plays</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Game</th>
+                <th>Players</th>
+                <th>Winner</th>
+                <th>RPS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for g in games %}
+            <tr>
+                <td>{{ g.date }}</td>
+                <td>{{ g.game.name}}</td>
+                <td>{{ g.players | map(attribute='name') | join(', ') }}</td>
+                <td>{{ g.winner.name if g.winner else "N/A" }}</td>
+                <td>{{ g.rps.name if g.rps else "N/A" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

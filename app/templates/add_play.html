@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}Add Game{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('main.add_player') }}"><button>Add Player</button></a>
+<a href="{{ url_for('main.add_game') }}"><button>Add Game</button></a>
+{{ render_form(form) }}
+{% endblock %}

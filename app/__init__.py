@@ -2,6 +2,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_wtf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
+
 import secrets
 
 db = SQLAlchemy()

@@ -1,4 +1,5 @@
 from . import db
+from datetime import datetime
 
 # Association table for many-to-many
 play_players = db.Table(
@@ -27,6 +28,7 @@ class Play(db.Model):
     date = db.Column(db.Date, nullable=False)
     winner_id = db.Column(db.Integer, db.ForeignKey('player.id'))
     rps_id = db.Column(db.Integer, db.ForeignKey('player.id'))
+    created_at = db.Column(db.DateTime, default=datetime.now)
 
     # Relationships
     game = db.relationship('Game', backref='plays', foreign_keys=[game_id])

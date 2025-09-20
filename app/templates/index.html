@@ -22,8 +22,8 @@
                 <td>{{ g.date }}</td>
                 <td>{{ g.game.name}}</td>
                 <td>{{ g.players | map(attribute='name') | join(', ') }}</td>
-                <td>{{ g.winner.name if g.winner else "N/A" }}</td>
-                <td>{{ g.rps.name if g.rps else "N/A" }}</td>
+                <td>{{ g.winner.name }}</td>
+                <td>{{ g.rps.name if g.rps else '' }}</td>
             </tr>
             {% endfor %}
         </tbody>

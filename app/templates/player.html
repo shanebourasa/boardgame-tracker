@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ player.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ player.name }}</h1>
+<ul>
+    <li>Total Plays: {{ recent_plays | length }}</li>
+</ul>
+<h2>Recent Plays:</h2>
+<table>
+    <thead>
+        <th>Date</th>
+        <th>Game</th>
+        <th>Players</th>
+        <th>Winner</th>
+        <th>RPS</th>
+    </thead>
+    <tbody>
+        {% for play in recent_plays %}
+        <tr>
+            <td>{{ play.date }}</td>
+            <td>{{ play.game.name }}</td>
+            <td>{{ play.players | map(attribute='name') | join(', ') }}</td>
+            <td>{{ play.winner.name }}</td>
+            <td>{{ play.rps.name if g.rps else '' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

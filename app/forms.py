@@ -2,11 +2,12 @@ from flask_wtf import FlaskForm
 from wtforms import SelectField, SelectMultipleField, DateField, SubmitField, StringField
 from wtforms.validators import DataRequired
 from .models import Player, Game
-from flask import current_app
+# from flask import current_app
+from datetime import date
 
 class PlayForm(FlaskForm):
     game = SelectField('Game name:', coerce=int, validators=[DataRequired()])
-    date = DateField('Date played:', validators=[DataRequired()])
+    date = DateField('Date played:', default=date.today, validators=[DataRequired()])
     players = SelectMultipleField('Players:', coerce=int, validators=[DataRequired()])
     winner = SelectField('Winner:', coerce=int)
     rps = SelectField('RPS:', coerce=int)
@@ -17,7 +18,7 @@ class PlayForm(FlaskForm):
         # Dynamically populate from database
         self.players.choices = [(p.id, p.name) for p in Player.query.order_by(Player.name).all()]
         self.winner.choices = [(p.id, p.name) for p in Player.query.order_by(Player.name).all()]
-        self.rps.choices = [(p.id, p.name) for p in Player.query.order_by(Player.name).all()]
+        self.rps.choices = [(0, None)] + [(p.id, p.name) for p in Player.query.order_by(Player.name).all()]
         self.game.choices = [(g.id, g.name) for g in Game.query.order_by(Game.name).all()]
 
 class PlayerForm(FlaskForm):

@@ -4,4 +4,9 @@
 
 {% block content %}
 <h1>Games Page</h1>
+<ul>
+    {% for game in game_list %}
+    <li><a href="{{ url_for('main.game_profile', id=game.id) }}">{{ game.name }}</a></li>
+    {% endfor %}
+</ul>
 {% endblock %}

@@ -1,11 +1,11 @@
 from flask import Flask
-from flask_bootstrap import Bootstrap5
+from flask_bootstrap import Bootstrap
 from flask_wtf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 import secrets
 
 db = SQLAlchemy()
-bootstrap = Bootstrap5()
+bootstrap = Bootstrap()
 csrf = CSRFProtect()
 
 def create_app():
